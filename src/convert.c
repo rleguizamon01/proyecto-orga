@@ -1,48 +1,28 @@
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
+#include "../headers/validacion.h"
+#include "../headers/strings.h"
+#include "../headers/convert.h"
+#include "../headers/variables_globales.h"
+#include "../headers/conversiones.h"
+#include "../headers/consola.h"
 #define DEBUG
+#define ERROR_NO_HAY_MEMORIA 1
 
-void leer_consola(int* argc, char* argv[]);
+char* numero_parte_entera;
+char* numero_parte_fraccionaria;
+int* base_origen;
+int* base_destino;
+int* mostrar_pasos;
+int* mostrar_ayuda;
 
-double numero = 0;
-int base_origen = 10;
-int base_destino = 10;
-int mostrar_pasos = 0;
-int mostrar_ayuda = 0;
-
-int main(int argc, char* argv[])
-{
-    leer_consola(&argc, argv);
-    printf("numero es %f\nbase_or es %d\nbase_dest es %d\nmostrar_pasos es %d\nmostrar_ayuda es %d", numero, base_origen, base_destino, mostrar_pasos, mostrar_ayuda);
+int main(int argc, char* argv[]){
+    inicializar_variables(); // variables_globales.c
+    leer_consola(&argc, argv); // consola.c
+    mostrar_ayuda_consola(); // consola.c
+    convertir_letras_a_numeros(); // conversiones.c -> charlar si es necesario
+    validar_datos_consola(); // validacion.c
+    //convertir_a_base_x();
+    printf("numero es %f\nbase_or es %d\nbase_dest es %d\nmostrar_pasos es %d\nmostrar_ayuda es %d", *numero_a_convertir, *base_origen, *base_destino, *mostrar_pasos, *mostrar_ayuda);
     return 0;
-}
-
-void leer_consola(int* argc, char* argv[])
-{
-    int i;
-    for(i = 0; i < *argc; i++){
-        #ifdef DEBUG
-         //printf("REPETICION NUM %d y el elem es %s\n", i, argv[i]);
-        #endif
-
-        if(!strcasecmp(argv[i], "-n")){
-            #ifdef DEBUG
-             printf("detecto -n %s\n", argv[i]);
-            #endif
-            numero = atof(argv[i + 1]);
-        }
-        else if(!strcasecmp(argv[i], "-s")){
-            base_origen = atoi(argv[i + 1]);
-        }
-        else if(!strcasecmp(argv[i], "-d")){
-            base_destino = atoi(argv[i + 1]);
-        }
-        else if(!strcasecmp(argv[i], "-v")){
-            mostrar_pasos = 1;
-        }
-        else if(!strcasecmp(argv[i], "-h")){
-            mostrar_ayuda = 1;
-        }
-    }
 }

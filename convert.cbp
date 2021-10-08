@@ -31,7 +31,28 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="headers/consola.h" />
+		<Unit filename="headers/conversiones.h" />
+		<Unit filename="headers/convert.h" />
+		<Unit filename="headers/strings.h" />
+		<Unit filename="headers/validacion.h" />
+		<Unit filename="headers/variables_globales.h" />
+		<Unit filename="src/consola.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/conversiones.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="src/convert.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/strings.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/validacion.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/variables_globales.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>
