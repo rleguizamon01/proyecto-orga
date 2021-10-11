@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "../headers/strings.h"
-#include "../headers/convert.h"
-#include "../headers/validacion.h"
+#include "strings.h"
+#include "convert.h"
+#include "validacion.h"
 
 #define ERROR_NO_HAY_MEMORIA 1
 #define precisionEntera 10

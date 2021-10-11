@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "../headers/validacion.h"
-#include "../headers/convert.h"
-#include "../headers/consola.h"
-#include "../headers/strings.h"
+#include "validacion.h"
+#include "convert.h"
+#include "consola.h"
+#include "strings.h"
 
 #define EXIT_SUCCESS 0
 #define EXIT_FAILURE 1

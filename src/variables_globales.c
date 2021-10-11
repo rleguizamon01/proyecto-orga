@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "../headers/variables_globales.h"
-#include "../headers/convert.h"
+#include "variables_globales.h"
+#include "convert.h"
 
 #define ERROR_NO_HAY_MEMORIA 1
 #define precisionEntera 10

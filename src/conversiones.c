@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "../headers/convert.h"
-#include "../headers/consola.h"
+#include "convert.h"
+#include "consola.h"
 
 #define EXIT_SUCCESS 0
 #define EXIT_FAILURE 1
@@ -468,7 +468,7 @@ void conversor_base_a_base(){
     } else{ if (*baseOrigen == 10){
         arr_to_long(parteEnteraTrabajable, numeroLong);
         if(*mostrarPasos)
-            printf("Convierto la parte entera de base %d a base %d:\n\n", *baseOrigen, *baseDestino);
+            printf("Utilizo el valor absoluto del numero y convierto la parte entera de base %d a base %d:\n\n", *baseOrigen, *baseDestino);
         decimal_a_base_entero(numeroLong, baseDestino, parteEnteraFinal);
 
         if(*mostrarPasos)
@@ -477,7 +477,7 @@ void conversor_base_a_base(){
 
     } else if(*baseDestino == 10){
         if(*mostrarPasos)
-            printf("Convierto la parte entera de base %d a base %d:\n\n", *baseOrigen, *baseDestino);
+            printf("Utilizo el valor absoluto del numero y convierto la parte entera de base %d a base %d:\n\n", *baseOrigen, *baseDestino);
         base_a_decimal_entero(parteEnteraTrabajable, baseOrigen, numeroLong);
         long_to_arr(numeroLong, parteEnteraFinal);
         if(*mostrarPasos)
