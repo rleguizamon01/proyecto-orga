@@ -1,49 +1,67 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "../headers/strings.h"
+#include "../headers/convert.h"
+#include "../headers/validacion.h"
 
 #define ERROR_NO_HAY_MEMORIA 1
+#define precisionEntera 10
+#define precisionFraccional 5
 
-/*
-Convierte el parametro numeroNuevo en un arreglo de char desde el comienzo hasta encontrar el caracter "."
-parametros:
-char* numero (arreglo de caracteres que representan un numero en cierta base)
-int* longNumero (longitud del arreglo numero)
-char* numeroNuevo (arreglo de caracteres cuyos elementos apuntados son modificados)
+/**
+* Convierte el parametro numeroNuevo en un arreglo de char desde el comienzo hasta encontrar el caracter "."
+* @param numero arreglo de caracteres que representan un numero en cierta base
+* @param longNumero longitud del arreglo numero
+* @param numeroNuevo arreglo de caracteres cuyos elementos apuntados son modificados
 */
 void parte_entera(char* numero, int* longNumero, char* numeroNuevo){
     int* i;
+    int* j;
+
     i = (int*) malloc(sizeof(int));
-    if(i == NULL)
+    j = (int*) malloc(sizeof(int));
+
+    if(i == NULL || j == NULL)
         exit(ERROR_NO_HAY_MEMORIA);
-    *i = 0;
+
+    // Si el primer digito es un menos, le da valor 1 a esNegativo y comienza a recorrer el numero por el indice 1 (para esquivar el menos)
+    if(numero[0] == '-'){
+        *esNegativo = 1;
+        *i = 1;
+    } else
+        *i = 0;
+
+    *j = 0;
 
     while(numero[*i] != '.'){
-        numeroNuevo[*i] = numero[*i];
-        i++;
+        numeroNuevo[*j] = numero[*i];
+        (*i)++;
+        (*j)++;
     }
+    numeroNuevo[*i] = '\0';
 
     free(i);
+    free(j);
 }
 
-/*
-Convierte el parametro numeroNuevo en un arreglo de char despues de la aparicion del caracter "." hasta el final
-parametros:
-char* numero (arreglo de caracteres que representan un numero en cierta base)
-int* longNumero (longitud del arreglo numero)
-char* numeroNuevo (arreglo de caracteres cuyos elementos apuntados son modificados)
+/**
+* Convierte el parametro numeroNuevo en un arreglo de char despues de la aparicion del caracter "." hasta el final
+* @param numero arreglo de caracteres que representan un numero en cierta base
+* @param longNumero longitud del arreglo numero
+* @param numeroNuevo arreglo de caracteres cuyos elementos apuntados son modificados
 */
 void parte_decimal(char* numero, int* longNumero, char* numeroNuevo){
     int* i;
     int* indiceAlEncontrarPunto;
     int* encontroPunto;
-
+    int* longitudParteFraccionaria;
 
     i = (int*) malloc(sizeof(int));
     encontroPunto = (int*) malloc(sizeof(int));
     indiceAlEncontrarPunto = (int*) malloc(sizeof(int));
+    longitudParteFraccionaria = (int*) malloc(sizeof(int));
 
-    if(i == NULL || encontroPunto == NULL || indiceAlEncontrarPunto == NULL)
+    if(i == NULL || encontroPunto == NULL || indiceAlEncontrarPunto == NULL || longitudParteFraccionaria == NULL)
         exit(ERROR_NO_HAY_MEMORIA);
 
     *i = 0;
@@ -51,22 +69,61 @@ void parte_decimal(char* numero, int* longNumero, char* numeroNuevo){
     *encontroPunto = 0;
 
     while(numero[*i] != '\0'){
-        if(numero[*i] == '.')
-            *encontroPunto = 1;
         if(*encontroPunto){
             numeroNuevo[*indiceAlEncontrarPunto] = numero[*i];
-            indiceAlEncontrarPunto++;
+            (*indiceAlEncontrarPunto)++;
         }
-        i++;
+        if(numero[*i] == '.')
+            *encontroPunto = 1;
+        (*i)++;
     }
+
+    numeroNuevo[*indiceAlEncontrarPunto] = '\0';
 
     free(i);
     free(indiceAlEncontrarPunto);
     free(encontroPunto);
+    free(longitudParteFraccionaria);
 }
 
-/*
-Convierte al caracter apuntado por caracterRetorno a letra minuscula si es una letra mayuscula
+/**
+* Rellena el comienzo de la cadena de la parte entera del numero con ceros para poder facilitar los calculos en las conversiones
+*/
+void rellenar_parte_entera_con_ceros(){
+    int* i;
+    int* longitudParteEntera;
+    char* cadenaAux;
+
+    i = (int*) malloc(sizeof(int));
+    longitudParteEntera = (int*) malloc(sizeof(int));
+    cadenaAux = (char*) malloc(sizeof(char) * precisionEntera + 1);
+
+    if(i == NULL || cadenaAux == NULL || longitudParteEntera == NULL)
+        exit(ERROR_NO_HAY_MEMORIA);
+
+    longitud_cadena(numeroParteEnteraChar, longitudParteEntera);
+
+    for(*i = 0; *i < *longitudParteEntera; (*i)++){
+        cadenaAux[*i] = numeroParteEnteraChar[*i];
+    }
+
+    for(*i = 0; *i < precisionEntera; (*i)++){
+        if(*i < precisionEntera - *longitudParteEntera)
+            numeroParteEnteraChar[*i] = '0';
+        else
+            numeroParteEnteraChar[*i] = cadenaAux[*i - precisionEntera + *longitudParteEntera];
+    }
+    numeroParteEnteraChar[precisionEntera] = '\0';
+
+    free(cadenaAux);
+    free(i);
+    free(longitudParteEntera);
+}
+
+/**
+* Convierte al caracter apuntado por caracterRetorno a letra minuscula si es una letra mayuscula
+* @param caracter puntero de caracter de una cadena
+* @param caracterRetorno puntero de caracter cuyo valor es modificado
 */
 void convertir_a_minuscula(char* caracter, char* caracterRetorno){
     *caracterRetorno = *caracter;
@@ -74,14 +131,11 @@ void convertir_a_minuscula(char* caracter, char* caracterRetorno){
         *caracterRetorno += 32;
 }
 
-/*
-Verifica si dos arrays de caracteres son iguales, sin importar si son mayuscula o minuscula
-parametros:
-char* cadena1 (arreglo de caracteres a comparar con cadena2)
-char* cadena2 (arreglo de caracteres a comparar con cadena1)
-return:
-1 si las cadenas son iguales
-0 si son distintas
+/**
+* Verifica si dos arrays de caracteres son iguales, sin importar si son mayuscula o minuscula
+* @param cadena1 arreglo de caracteres a comparar con cadena2
+* @param cadena2 arreglo de caracteres a comparar con cadena1
+* @param sonIguales punto de entero cuyo valor es 1 si las cadenas son iguales y 0 si no lo son
 */
 void son_cadenas_iguales(char* cadena1, char* cadena2, int* sonIguales){
 
@@ -120,38 +174,14 @@ void son_cadenas_iguales(char* cadena1, char* cadena2, int* sonIguales){
     free(caracterAux2);
 }
 
-/*
-Devuelve la longitud de la cadena de caracteres pasada por parametro
-parametro: char* cadena (cadena de caracteres cuya longitud es analizada)
-return: entero cuyo valor es la longitud de la cadena
+/**
+* Modifica el valor apuntado por 'longitud' tal que su valor sea la longitud de la cadena de caracteres pasada por parametro
+* @param cadena cadena de caracteres cuya longitud es analizada
+* @param longitud puntero de entero cuyo valor es modificado a la longitud de la cadena
 */
-int longitud_cadena(char* cadena){
-    int* i;
-    i = (int*) malloc(sizeof(int));
-    if(i == NULL)
-        exit(ERROR_NO_HAY_MEMORIA);
-    *i = 0;
+void longitud_cadena(char* cadena, int* longitud){
+    *longitud = 0;
 
-    while(cadena[*i] != '\0')
-        i++;
-
-    return *i;
-}
-
-/*
-Muestra cada caracter del arreglo por consola
-*/
-void mostrar_cadena_consola(char* cadena){
-    int* i;
-    i = (int*) malloc(sizeof(int));
-    if(i == NULL)
-        exit(ERROR_NO_HAY_MEMORIA);
-    *i = 0;
-
-    printf("[");
-    while(cadena[*i] != '\0')
-        printf("%c, ", cadena[*i]);
-    printf("]");
-
-    free(i);
+    while(cadena[*longitud] != '\0')
+        (*longitud)++;
 }

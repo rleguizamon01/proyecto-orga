@@ -2,21 +2,41 @@
 #include <stdlib.h>
 #include "../headers/variables_globales.h"
 #include "../headers/convert.h"
+
 #define ERROR_NO_HAY_MEMORIA 1
+#define precisionEntera 10
+#define precisionFraccional 5
 
+/**
+* Asigna variables a la memoria dinamica y las inicializa con valores por defecto
+*/
 void inicializar_variables(){
-    numero_a_convertir = (double*) malloc(sizeof(double));
-    base_origen = (int*) malloc(sizeof(int));
-    base_destino = (int*) malloc(sizeof(int));
-    mostrar_pasos = (int*) malloc(sizeof(int));
-    mostrar_ayuda = (int*) malloc(sizeof(int));
+    esNegativo = (int*) malloc(sizeof(int));
+    numeroParteEnteraChar = (char*) malloc (sizeof(char) * precisionEntera + 1);
+    numeroParteFraccionariaChar = (char*) malloc (sizeof(char) * precisionFraccional + 1);
+    baseOrigen = (int*) malloc(sizeof(int));
+    baseDestino = (int*) malloc(sizeof(int));
+    mostrarPasos = (int*) malloc(sizeof(int));
+    mostrarAyuda = (int*) malloc(sizeof(int));
 
-    if(numero_a_convertir == NULL || base_origen == NULL || base_destino == NULL || mostrar_pasos == NULL || mostrar_ayuda == NULL)
+    if(numeroParteEnteraChar == NULL || numeroParteFraccionariaChar == NULL || baseOrigen == NULL || baseDestino == NULL || mostrarPasos == NULL || mostrarAyuda == NULL)
         exit(ERROR_NO_HAY_MEMORIA);
 
-    *numero_a_convertir = 0;
-    *base_origen = 10;
-    *base_destino = 10;
-    *mostrar_pasos = 0;
-    *mostrar_ayuda = 0;
+    *esNegativo = 0;
+    *baseOrigen = 10;
+    *baseDestino = 10;
+    *mostrarPasos = 0;
+    *mostrarAyuda = 0;
+}
+/**
+* Desasigna variables de la memoria dinamica
+*/
+void liberar_variables(){
+    free(esNegativo);
+    free(numeroParteEnteraChar);
+    free(numeroParteFraccionariaChar);
+    free(baseOrigen);
+    free(baseDestino);
+    free(mostrarPasos);
+    free(mostrarAyuda);
 }

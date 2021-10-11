@@ -1,12 +1,13 @@
 #ifndef CONVERT_H_INCLUDED
 #define CONVERT_H_INCLUDED
 
-double* numero_a_convertir;
-int* base_origen;
-int* base_destino;
-int* mostrar_pasos;
-int* mostrar_ayuda;
-
+int* esNegativo;
+char* numeroParteEnteraChar;
+char* numeroParteFraccionariaChar;
+int* baseOrigen;
+int* baseDestino;
+int* mostrarPasos;
+int* mostrarAyuda;
 
 void leer_consola(int* argc, char* argv[]);
 
