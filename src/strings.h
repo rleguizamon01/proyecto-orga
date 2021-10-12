@@ -7,6 +7,8 @@ void parte_decimal(char* numero, int* longNumero, char* numeroNuevo);
 
 void rellenar_parte_entera_con_ceros();
 
+void rellenar_parte_fraccionaria_con_ceros();
+
 void convertir_a_minuscula(char* caracter, char* caracterRetorno);
 
 void son_cadenas_iguales(char* cadena1, char* cadena2, int* sonIguales);

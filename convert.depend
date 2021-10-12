@@ -3,7 +3,7 @@
 	<stdio.h>
 	<string.h>
 
-1633944799 source:c:\users\teche\mi unidad\la uniiiiiiiiii\2° - 2do cuatrimestre\organización de computadoras\convert\src\convert.c
+1634003648 source:c:\users\teche\mi unidad\la uniiiiiiiiii\2° - 2do cuatrimestre\organización de computadoras\convert\src\convert.c
 	<stdio.h>
 	<stdlib.h>
 	"validacion.h"
@@ -28,7 +28,7 @@
 
 1633587657 source:c:\users\teche\mi unidad\la uniiiiiiiiii\2° - 2do cuatrimestre\organización de computadoras\convert\headers\validacion.h
 
-1633944799 source:c:\users\teche\mi unidad\la uniiiiiiiiii\2° - 2do cuatrimestre\organización de computadoras\convert\src\validacion.c
+1634003664 source:c:\users\teche\mi unidad\la uniiiiiiiiii\2° - 2do cuatrimestre\organización de computadoras\convert\src\validacion.c
 	<stdio.h>
 	<stdlib.h>
 	"validacion.h"
@@ -44,22 +44,23 @@
 
 1633941873 c:\users\teche\mi unidad\la uniiiiiiiiii\2° - 2do cuatrimestre\organización de computadoras\convert\headers\strings.h
 
-1633944799 source:c:\users\teche\mi unidad\la uniiiiiiiiii\2° - 2do cuatrimestre\organización de computadoras\convert\src\strings.c
+1634011730 source:c:\users\teche\mi unidad\la uniiiiiiiiii\2° - 2do cuatrimestre\organización de computadoras\convert\src\strings.c
 	<stdio.h>
 	<stdlib.h>
 	"strings.h"
 	"convert.h"
 	"validacion.h"
+	"consola.h"
 
 1633857819 c:\users\teche\mi unidad\la uniiiiiiiiii\2° - 2do cuatrimestre\organización de computadoras\convert\headers\variables_globales.h
 
-1633944799 source:c:\users\teche\mi unidad\la uniiiiiiiiii\2° - 2do cuatrimestre\organización de computadoras\convert\src\variables_globales.c
+1634011393 source:c:\users\teche\mi unidad\la uniiiiiiiiii\2° - 2do cuatrimestre\organización de computadoras\convert\src\variables_globales.c
 	<stdio.h>
 	<stdlib.h>
 	"variables_globales.h"
 	"convert.h"
 
-1633944944 source:c:\users\teche\mi unidad\la uniiiiiiiiii\2° - 2do cuatrimestre\organización de computadoras\convert\src\conversiones.c
+1634007843 source:c:\users\teche\mi unidad\la uniiiiiiiiii\2° - 2do cuatrimestre\organización de computadoras\convert\src\conversiones.c
 	<stdio.h>
 	<stdlib.h>
 	"convert.h"
@@ -67,7 +68,7 @@
 
 1633944303 c:\users\teche\mi unidad\la uniiiiiiiiii\2° - 2do cuatrimestre\organización de computadoras\convert\headers\conversiones.h
 
-1633944799 source:c:\users\teche\mi unidad\la uniiiiiiiiii\2° - 2do cuatrimestre\organización de computadoras\convert\src\consola.c
+1634011697 source:c:\users\teche\mi unidad\la uniiiiiiiiii\2° - 2do cuatrimestre\organización de computadoras\convert\src\consola.c
 	<stdio.h>
 	<stdlib.h>
 	"validacion.h"
@@ -84,7 +85,7 @@
 
 1633931623 c:\users\teche\mi unidad\la uniiiiiiiiii\2° - 2do cuatrimestre\organización de computadoras\convert\src\convert.h
 
-1633941873 c:\users\teche\mi unidad\la uniiiiiiiiii\2° - 2do cuatrimestre\organización de computadoras\convert\src\strings.h
+1633998318 c:\users\teche\mi unidad\la uniiiiiiiiii\2° - 2do cuatrimestre\organización de computadoras\convert\src\strings.h
 
 1633857819 c:\users\teche\mi unidad\la uniiiiiiiiii\2° - 2do cuatrimestre\organización de computadoras\convert\src\variables_globales.h
 

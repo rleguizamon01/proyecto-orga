@@ -66,6 +66,9 @@ void imprimir_arreglo_char_parte_entera(char* num, int* tam){
         arrAux++;
     }
 
+    if(!*encontroNumDistintoACero)
+        printf("0");
+
     //liberamos el espacio que habiamos reservado en la memoria dinamica
     free(i);
     free(encontroNumDistintoACero);

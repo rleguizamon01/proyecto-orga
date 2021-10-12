@@ -31,6 +31,16 @@ void validar_datos_consola(){
         abortar(ERROR_ENTRADA_BASES_INVALIDAS);
     }
 
+    // Valida que la longitud de la parte entera y fraccionaria este dentro de lo esperado
+
+    longitud_cadena(numeroParteEnteraChar, longitudCadenaNumero);
+    if(*longitudCadenaNumero > precisionEntera)
+        abortar(ERROR_ENTRADA_LONGITUD_INVALIDA);
+
+    longitud_cadena(numeroParteFraccionariaChar, longitudCadenaNumero);
+    if(*longitudCadenaNumero > precisionFraccional)
+        abortar(ERROR_ENTRADA_LONGITUD_INVALIDA);
+
     // Valida que los caracteres del numero sean validos (0-9, a-f, A-F) y pertenezcan a la base de origen
 
     // Comienza validando la parte entera

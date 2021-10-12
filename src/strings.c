@@ -3,6 +3,7 @@
 #include "strings.h"
 #include "convert.h"
 #include "validacion.h"
+#include "consola.h"
 
 #define ERROR_NO_HAY_MEMORIA 1
 #define precisionEntera 10
@@ -22,7 +23,7 @@ void parte_entera(char* numero, int* longNumero, char* numeroNuevo){
     j = (int*) malloc(sizeof(int));
 
     if(i == NULL || j == NULL)
-        exit(ERROR_NO_HAY_MEMORIA);
+        abortar(ERROR_NO_HAY_MEMORIA);
 
     // Si el primer digito es un menos, le da valor 1 a esNegativo y comienza a recorrer el numero por el indice 1 (para esquivar el menos)
     if(numero[0] == '-'){
@@ -33,12 +34,21 @@ void parte_entera(char* numero, int* longNumero, char* numeroNuevo){
 
     *j = 0;
 
-    while(numero[*i] != '.'){
+    // Copia el numero ingresado por consola a otra variable desde el comienzo hasta encontrar un punto
+    while((*j < *longNumero) && (numero[*i] != '.')){
         numeroNuevo[*j] = numero[*i];
         (*i)++;
         (*j)++;
     }
-    numeroNuevo[*i] = '\0';
+
+    // Si no ingreso parte entera, la completa con un cero
+    if(*j == 0){
+        numeroNuevo[*j] = '0';
+        (*j)++;
+    }
+
+
+    numeroNuevo[*j] = '\0';
 
     free(i);
     free(j);
@@ -51,6 +61,7 @@ void parte_entera(char* numero, int* longNumero, char* numeroNuevo){
 * @param numeroNuevo arreglo de caracteres cuyos elementos apuntados son modificados
 */
 void parte_decimal(char* numero, int* longNumero, char* numeroNuevo){
+
     int* i;
     int* indiceAlEncontrarPunto;
     int* encontroPunto;
@@ -62,11 +73,12 @@ void parte_decimal(char* numero, int* longNumero, char* numeroNuevo){
     longitudParteFraccionaria = (int*) malloc(sizeof(int));
 
     if(i == NULL || encontroPunto == NULL || indiceAlEncontrarPunto == NULL || longitudParteFraccionaria == NULL)
-        exit(ERROR_NO_HAY_MEMORIA);
+        abortar(ERROR_NO_HAY_MEMORIA);
 
     *i = 0;
     *indiceAlEncontrarPunto = 0;
     *encontroPunto = 0;
+
 
     while(numero[*i] != '\0'){
         if(*encontroPunto){
@@ -76,6 +88,12 @@ void parte_decimal(char* numero, int* longNumero, char* numeroNuevo){
         if(numero[*i] == '.')
             *encontroPunto = 1;
         (*i)++;
+    }
+
+    // Si no encontro un punto, completa la parte decimal con un cero
+    if(*indiceAlEncontrarPunto == 0){
+        numeroNuevo[0] = '0';
+        (*indiceAlEncontrarPunto)++;
     }
 
     numeroNuevo[*indiceAlEncontrarPunto] = '\0';
@@ -99,25 +117,64 @@ void rellenar_parte_entera_con_ceros(){
     cadenaAux = (char*) malloc(sizeof(char) * precisionEntera + 1);
 
     if(i == NULL || cadenaAux == NULL || longitudParteEntera == NULL)
-        exit(ERROR_NO_HAY_MEMORIA);
+        abortar(ERROR_NO_HAY_MEMORIA);
 
+    // Copia el numero pasado por consola a una variable auxiliar
     longitud_cadena(numeroParteEnteraChar, longitudParteEntera);
 
     for(*i = 0; *i < *longitudParteEntera; (*i)++){
         cadenaAux[*i] = numeroParteEnteraChar[*i];
     }
 
+    // Si el numero pasado por consola es menor a la precision entera (por defecto 10), completa el comienzo con ceros
     for(*i = 0; *i < precisionEntera; (*i)++){
         if(*i < precisionEntera - *longitudParteEntera)
             numeroParteEnteraChar[*i] = '0';
         else
             numeroParteEnteraChar[*i] = cadenaAux[*i - precisionEntera + *longitudParteEntera];
     }
+
+    // Completa el ultimo elemento de la cadena con \0
     numeroParteEnteraChar[precisionEntera] = '\0';
 
     free(cadenaAux);
     free(i);
     free(longitudParteEntera);
+}
+
+/**
+* Rellena el final de la parte decimal con ceros para poder facilitar la conversion de bases
+*/
+
+void rellenar_parte_fraccionaria_con_ceros(){
+    int* i;
+    int* longitudParteFraccionaria;
+    char* cadenaAux;
+
+    i = (int*) malloc(sizeof(int));
+    longitudParteFraccionaria = (int*) malloc(sizeof(int));
+    cadenaAux = (char*) malloc(sizeof(char) * precisionFraccional + 1);
+
+    if(i == NULL || cadenaAux == NULL || longitudParteFraccionaria == NULL)
+        abortar(ERROR_NO_HAY_MEMORIA);
+
+    longitud_cadena(numeroParteFraccionariaChar, longitudParteFraccionaria);
+
+    for(*i = 0; *i < *longitudParteFraccionaria; (*i)++){
+        cadenaAux[*i] = numeroParteFraccionariaChar[*i];
+    }
+
+    for(*i = precisionFraccional; *i > 0; (*i)--){
+        if(*i >= *longitudParteFraccionaria)
+            numeroParteFraccionariaChar[*i] = '0';
+        else
+            numeroParteFraccionariaChar[*i] = cadenaAux[*i];
+    }
+    numeroParteFraccionariaChar[precisionFraccional] = '\0';
+
+    free(cadenaAux);
+    free(i);
+    free(longitudParteFraccionaria);
 }
 
 /**
@@ -150,7 +207,7 @@ void son_cadenas_iguales(char* cadena1, char* cadena2, int* sonIguales){
     caracterAux2 = (char*) malloc(sizeof(char));
 
     if(i == NULL || sonIgualesAux == NULL || caracterAux1 == NULL || caracterAux2 == NULL)
-        exit(ERROR_NO_HAY_MEMORIA);
+        abortar(ERROR_NO_HAY_MEMORIA);
 
     *i = 0;
     *sonIgualesAux = 1;
@@ -168,6 +225,9 @@ void son_cadenas_iguales(char* cadena1, char* cadena2, int* sonIguales){
     }
 
     *sonIguales = *sonIgualesAux;
+    #ifdef DEBUG
+        printf("## soniguales(): %s y %s son iguales: %d\n", cadena1, cadena2, *sonIguales);
+    #endif
     free(i);
     free(sonIgualesAux);
     free(caracterAux1);

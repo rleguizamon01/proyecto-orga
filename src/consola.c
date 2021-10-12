@@ -28,10 +28,10 @@ void abortar(int ERROR){
             printf("Ocurrio un error de OVERFLOW debido a que la parte entera del numero no puede ser representada con %d digitos en la base solicitada", precisionEntera);
             break;
         case 4:
-            printf("Ocurrio un error: la parte entera ingresada debe tener como maximo 10 digitos y la parte decimal como maximo 5");
+            printf("Ocurrio un error: la parte entera ingresada debe tener como maximo %d digitos y la parte decimal como maximo %d", precisionEntera, precisionFraccional);
             break;
         case 6:
-            printf("Ocurrio un error: uno/s de los digitos ingresados en el numero no es valido");
+            printf("Ocurrio un error: uno/s de los digitos ingresados en el numero no es/son valido/s");
             break;
         case 7:
             printf("Ocurrio un error: existe/n digito/s en el numero que no pertenecen a la base origen ingresada");
@@ -57,7 +57,7 @@ void leer_consola(int* argc, char* argv[])
     if(i == NULL || sonIgualesAux == NULL)
         abortar(ERROR_NO_HAY_MEMORIA);
 
-    for(*i = 0; *i < *argc; *i += 1){
+    for(*i = 0; *i < *argc; (*i)++){
 
         son_cadenas_iguales(argv[*i], "-n", sonIgualesAux);
         if(*sonIgualesAux){
@@ -66,39 +66,41 @@ void leer_consola(int* argc, char* argv[])
             if(longitudCadena == NULL)
                 abortar(ERROR_NO_HAY_MEMORIA);
 
-            longitud_cadena(argv[(*i) + 1], longitudCadena);
+            longitud_cadena(argv[(*i + 1)], longitudCadena);
+            parte_entera(argv[(*i + 1)], longitudCadena, numeroParteEnteraChar);
 
-            parte_entera(argv[(*i) + 1], longitudCadena, numeroParteEnteraChar);
-            printf("Parte entera es: %s\n", numeroParteEnteraChar);
-
-            parte_decimal(argv[(*i) + 1], longitudCadena, numeroParteFraccionariaChar);
-            printf("Parte fracc es: %s\n", numeroParteFraccionariaChar);
+            parte_decimal(argv[(*i + 1)], longitudCadena, numeroParteFraccionariaChar);
 
             free(longitudCadena);
+            *sonIgualesAux = 0;
             continue;
         }
 
         son_cadenas_iguales(argv[*i], "-s", sonIgualesAux);
         if(*sonIgualesAux){
             *baseOrigen = atoi(argv[*i + 1]);
+            *sonIgualesAux = 0;
             continue;
         }
 
         son_cadenas_iguales(argv[*i], "-d", sonIgualesAux);
         if(*sonIgualesAux){
             *baseDestino = atoi(argv[*i + 1]);
+            *sonIgualesAux = 0;
             continue;
         }
 
         son_cadenas_iguales(argv[*i], "-v", sonIgualesAux);
         if(*sonIgualesAux){
             *mostrarPasos = 1;
+            *sonIgualesAux = 0;
             continue;
         }
 
         son_cadenas_iguales(argv[*i], "-h", sonIgualesAux);
         if(*sonIgualesAux){
             *mostrarAyuda = 1;
+            *sonIgualesAux = 0;
             continue;
         }
     }

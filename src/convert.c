@@ -37,6 +37,7 @@ int main(int argc, char* argv[]){
     mostrar_ayuda_consola(); // si el usuario ingreso -h por consola, muestra una ayuda y finaliza el programa (consola.c)
     validar_datos_consola(); // valida los valores ingresados por consola (validacion.c)
     rellenar_parte_entera_con_ceros(); // completa el comienzo de la parte entera con ceros para facilitar el calculo de conversiones (string.c)
+    rellenar_parte_fraccionaria_con_ceros(); // completa el final de la parte fraccionaria con ceros para facilitar el calculo de conversiones (string.c)
     conversor_base_a_base(); // convierte el numero en la base destino (conversiones.c)
     liberar_variables(); // libera las variables de la memoria dinamica (variables_globales.c)
     return 0;
